@@ -1,22 +1,15 @@
-// Verifica que el valor sea un string no vacio (usa trim())
-function esCadenaValida(valor) {
-  return typeof valor === "string" && valor.trim().length > 0;
-}
-
 function limpiar(texto) {
     return texto.trim();
 }
 
-function esPrioridadValida(prioridad) {
-    const prioridadesPermitidas = ['Alta', 'Media', 'Baja'];
-    return prioridadesPermitidas.includes(prioridad);
+function esCadenaValida(valor) {
+    return typeof valor === "string" && limpiar(valor).length > 0;
 }
 
 function normalizarTexto(texto) {
-  const limpio = texto.trim().toLowerCase();
-  return limpio.charAt(0).toUpperCase() + limpio.slice(1);
+    const limpio = limpiar(texto).toLowerCase();
+    return limpio.charAt(0).toUpperCase() + limpio.slice(1);
 }
-
 
 // Verifica que el estado sea uno de los permitidos
 function estadoValido(estado) {

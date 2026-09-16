@@ -1,4 +1,4 @@
-const { esCadenaValida, esPrioridadValida, normalizarTexto, estadoValido } = require('../utils/helpers');
+const { esCadenaValida, esPrioridadValida, estadoValido } = require('../utils/helpers');
 
 const incidencias = [];
 let siguienteId = 1;
@@ -17,30 +17,19 @@ const createIncidencia = (req, res) => {
     if (!esCadenaValida(descripcion)) {
         return res.status(400).json({ mensaje: "La descripción es inválida" });
     }
-    if (!esPrioridadValida(prioridad)) {
-        return res.status(400).json({ mensaje: "La prioridad es inválida" });
+    if (!esCadenaValida(prioridad) || !esPrioridadValida(prioridad)) {
+        return res.status(400).json({ mensaje: "La prioridad debe ser Alta, Media o Baja" });
     }
 
-    const estado = 'Pendiente'; // Estado inicial de la incidencia (regla de negocio: todas las incidencias comienzan como "Pendiente")
 
     const nuevaIncidencia = {
         id: siguienteId,
-        empleado,
-        area,
-        descripcion,
-        prioridad,
-        estado
+        empleado: normalizarTexto(empleado),
+        area: normalizarTexto(area),
+        descripcion: limpiar(descripcion),
+        prioridad: normalizarTexto(prioridad),
+        estado: 'Pendiente'   // regla de negocio: toda incidencia nueva nace Pendiente
     };
-
-    //validando estado y prioridad
-    if (!estadoValido(estado)) {
-        return res.status(400).json({ mensaje: "El estado es inválido" });
-    }
-
-    if (!esPrioridadValida(prioridad)) {
-        return res.status(400).json({ mensaje: "La prioridad es inválida" });
-    }
-
 
     incidencias.push(nuevaIncidencia);
     siguienteId++;
