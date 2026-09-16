@@ -69,8 +69,21 @@ const getIncidenciaById = (req, res) => {
     return res.status(200).json(incidencia);
 };
 
+const deleteIncidencia = (req, res) => {
+    const id = Number(req.params.id);
+    const incidenciaIndex = incidencias.findIndex(inc => inc.id === id);
+
+    if (incidenciaIndex === -1) {
+        return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+    }
+
+    incidencias.splice(incidenciaIndex, 1);
+    res.status(200).json({ mensaje: "Incidencia eliminada" });
+};
+
 module.exports = {
     createIncidencia,
     getIncidencias,
-    getIncidenciaById
+    getIncidenciaById,
+    deleteIncidencia
 };

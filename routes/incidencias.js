@@ -3,9 +3,9 @@ const routes = express.Router();
 
 const { createIncidencia,
     getIncidencias,
-    getIncidenciaById
+    getIncidenciaById,
    // updateEstadoIncidencia,
-   // deleteIncidencia,
+   deleteIncidencia
    // getEstadisticas,
     //clasificarIncidenciaAutomatica 
    } = require('../controllers/incidenciascontroller');
@@ -14,7 +14,7 @@ routes.post('/', createIncidencia);
 routes.get('/', getIncidencias);
 routes.get('/:id', getIncidenciaById);
 //routes.put('/:id/estado', updateEstadoIncidencia);
-//routes.delete('/:id', deleteIncidencia);   
+routes.delete('/:id', deleteIncidencia);   
 //routes.get('/estadisticas', getEstadisticas);
 //routes.get('/:id/clasificacion', clasificarIncidenciaAutomatica);
 
