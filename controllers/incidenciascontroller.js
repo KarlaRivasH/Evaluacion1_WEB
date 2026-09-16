@@ -81,9 +81,42 @@ const deleteIncidencia = (req, res) => {
     res.status(200).json({ mensaje: "Incidencia eliminada" });
 };
 
+const clasificarIncidenciaAutomatica = (req, res) => {
+    const id = Number(req.params.id);
+    
+    if (isNaN(id)) {
+        return res.status(400).json({ mensaje: "El id debe ser un número" });
+    }
+
+    const incidencia = incidencias.find(inc => inc.id === id);
+
+    if (!incidencia) {
+        return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+    }
+
+    let clasificacion;
+
+    switch (incidencia.prioridad) {
+        case 'Alta':
+            clasificacion = 'Crítica';
+            break;
+        case 'Media':
+            clasificacion = 'Importante';
+            break;
+        case 'Baja':
+            clasificacion = 'Normal';
+            break;
+        default:
+            clasificacion = 'Sin clasificacion definida';
+    }
+
+    res.status(200).json({ id: incidencia.id, clasificacion });
+};
+
 module.exports = {
     createIncidencia,
     getIncidencias,
     getIncidenciaById,
-    deleteIncidencia
+    deleteIncidencia,
+    clasificarIncidenciaAutomatica
 };
