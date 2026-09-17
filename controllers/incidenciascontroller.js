@@ -1,4 +1,4 @@
-const { esCadenaValida, esPrioridadValida, estadoValido } = require('../utils/helpers');
+const { esCadenaValida, esPrioridadValida, limpiar } = require('../utils/helpers');
 
 const incidencias = [];
 let siguienteId = 1;
@@ -24,17 +24,17 @@ const createIncidencia = (req, res) => {
 
     const nuevaIncidencia = {
         id: siguienteId,
-        empleado: normalizarTexto(empleado),
-        area: normalizarTexto(area),
+        empleado: limpiar(empleado),
+        area: limpiar(area),
         descripcion: limpiar(descripcion),
-        prioridad: normalizarTexto(prioridad),
+        prioridad: limpiar(prioridad),
         estado: 'Pendiente'   // regla de negocio: toda incidencia nueva nace Pendiente
     };
 
     incidencias.push(nuevaIncidencia);
     siguienteId++;
 
-    res.status(201).json(nuevaIncidencia);
+    return res.status(201).json({ mensaje: "Incidencia registrada correctamente" });
 }
 
 
