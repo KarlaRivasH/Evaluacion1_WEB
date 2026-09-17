@@ -102,10 +102,58 @@ const clasificarIncidenciaAutomatica = (req, res) => {
     res.status(200).json({ id: incidencia.id, clasificacion });
 };
 
+const cambiarEstado = (req, res) => {
+
+    const id = Number(req.params.id);
+    const { estado } = req.body;
+
+    const incidencia = incidencias.find(
+        incidencia => incidencia.id === id
+    );
+
+    if (!incidencia) {
+        return res.status(404).json({
+            mensaje: "Incidencia no encontrada"
+        });
+    }
+
+    switch (estado) {
+
+        case "Pendiente":
+            incidencia.estado = estado;
+            break;
+
+        case "En Proceso":
+            incidencia.estado = estado;
+            break;
+
+        case "Resuelta":
+            incidencia.estado = estado;
+            break;
+
+            case "Cancelada":
+            incidencia.estado = estado;
+            break;
+
+        default:
+            return res.status(400).json({
+                mensaje: "Estado inválido"
+            });
+    }
+
+    res.json({
+        mensaje: "Estado actualizado correctamente",
+        incidencia
+    });
+};
+
+
+
 module.exports = {
     createIncidencia,
     getIncidencias,
     getIncidenciaById,
     deleteIncidencia,
-    clasificarIncidenciaAutomatica
+    clasificarIncidenciaAutomatica,
+    cambiarEstado
 };
