@@ -20,7 +20,6 @@ function estadoValido(estado) {
 module.exports = {
   esCadenaValida,
   limpiar,
-  esPrioridadValida,
   estadoValido,
   normalizarTexto,
 };
