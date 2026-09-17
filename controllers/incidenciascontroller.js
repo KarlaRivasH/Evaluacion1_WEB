@@ -147,6 +147,22 @@ const cambiarEstado = (req, res) => {
     });
 };
 
+const getEstadisticas = (req, res) => {
+    // Un solo recorrido: reduce agrupa y cuenta por estado
+    const conteo = incidencias.reduce((acumulador, inc) => {
+        acumulador[inc.estado] = (acumulador[inc.estado] || 0) + 1;
+        return acumulador;
+    }, {});
+
+    return res.status(200).json({
+        totalIncidencias: incidencias.length,
+        pendientes: conteo['Pendiente'] || 0,
+        enProceso: conteo['En Proceso'] || 0,
+        resueltas: conteo['Resuelta'] || 0,
+        canceladas: conteo['Cancelada'] || 0
+    });
+};
+
 
 
 module.exports = {
@@ -155,5 +171,6 @@ module.exports = {
     getIncidenciaById,
     deleteIncidencia,
     clasificarIncidenciaAutomatica,
-    cambiarEstado
+    cambiarEstado,
+    getEstadisticas
 };
